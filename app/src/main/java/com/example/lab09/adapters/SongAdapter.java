@@ -14,7 +14,6 @@ import com.example.lab09.model.Song;
 import java.util.List;
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder> {
-
     private List<Song> songList;
 
     public SongAdapter(List<Song> songList) {

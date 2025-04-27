@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileHelper {
-
     private static final String FILE_NAME = "songs.txt";
 
     // Чтение песен из файла
