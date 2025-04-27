@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Разрешение для ForegroundService -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
@@ -15,8 +16,9 @@
         android:theme="@style/Theme.Lab09"
         tools:targetApi="31">
 
+        <!-- Стартовый экран: SplashActivity -->
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +26,16 @@
             </intent-filter>
         </activity>
 
+        <!-- Экран логина -->
+        <activity android:name=".activities.LoginActivity" android:exported="true" />
+
+        <!-- Домашний экран -->
+        <activity android:name=".activities.HomeActivity" android:exported="true" />
+
+        <!-- MainActivity оставляем (без интент-фильтра) -->
+        <activity android:name=".MainActivity" android:exported="true" />
+
+        <!-- Музыкальный сервис -->
         <service android:name=".service.MusicService" />
 
     </application>
