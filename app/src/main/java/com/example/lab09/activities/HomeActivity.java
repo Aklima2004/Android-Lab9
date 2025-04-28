@@ -31,7 +31,6 @@ public class HomeActivity extends AppCompatActivity {
 
         setupHomeSongs(); // Загружаем песни
 
-        // Устанавливаем выбранный пункт
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -59,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
         homeSongs.add(new Song("Stay", "The Kid LAROI & Justin Bieber"));
         homeSongs.add(new Song("Blinding Lights", "The Weeknd"));
 
-        songAdapter = new SongAdapter(homeSongs);
+        songAdapter = new SongAdapter(homeSongs, true); // !!! Важно true
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(songAdapter);
     }

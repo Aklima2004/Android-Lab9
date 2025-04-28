@@ -17,19 +17,24 @@ import com.example.lab09.R;
 public class MusicService extends Service {
 
     private static final String CHANNEL_ID = "MusicServiceChannel";
+    private static final int NOTIFICATION_ID = 1;
     private MediaPlayer mediaPlayer;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        // Создаём канал уведомлений для Android 8.0+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel serviceChannel = new NotificationChannel(
                     CHANNEL_ID,
-                    "Music Service Channel",
-                    NotificationManager.IMPORTANCE_DEFAULT
+                    "Music Playback",
+                    NotificationManager.IMPORTANCE_HIGH
             );
+            serviceChannel.setDescription("Playing your favorite music");
+            serviceChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+            serviceChannel.setShowBadge(false);
+            serviceChannel.setSound(null, null);
+
             NotificationManager manager = getSystemService(NotificationManager.class);
             if (manager != null) {
                 manager.createNotificationChannel(serviceChannel);
@@ -39,23 +44,24 @@ public class MusicService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        // Воспроизводим музыку (локальный файл song.mp3 из папки res/raw)
         if (mediaPlayer == null) {
             mediaPlayer = MediaPlayer.create(this, R.raw.song);
             mediaPlayer.setLooping(true);
-            mediaPlayer.start();
         }
+        mediaPlayer.start();
 
-        // Создаём уведомление
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Playing Music")
-                .setContentText("Song is playing...")
-                .setSmallIcon(R.drawable.ic_music_note) // маленькая иконка уведомления
+                .setContentTitle("Music Playback")
+                .setContentText("Playing your favorite music")
+                .setSmallIcon(R.drawable.ic_music_note)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
                 .build();
 
-        startForeground(1, notification);
+        // Просто запускаем Foreground Service без указания типа!
+        startForeground(NOTIFICATION_ID, notification);
 
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     @Override
@@ -71,6 +77,6 @@ public class MusicService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null; // мы не связываемся с сервисом
+        return null;
     }
 }

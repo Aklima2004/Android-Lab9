@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Разрешение для ForegroundService -->
+    <!-- ВСЕ разрешения должны быть здесь -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +17,7 @@
         android:theme="@style/Theme.Lab09"
         tools:targetApi="31">
 
-        <!-- Стартовый экран: SplashActivity -->
+        <!-- Тут активити, сервисы и прочее -->
         <activity
             android:name=".activities.SplashActivity"
             android:exported="true">
@@ -26,22 +27,16 @@
             </intent-filter>
         </activity>
 
-        <!-- Экран логина -->
         <activity android:name=".activities.LoginActivity" android:exported="true" />
-
-        <!-- Домашний экран -->
         <activity android:name=".activities.HomeActivity" android:exported="true" />
-
-        <!-- Экран профиля (добавлено!) -->
         <activity android:name=".activities.ProfileActivity" android:exported="true" />
-
-        <!-- MainActivity оставляем (без интент-фильтра) -->
+        <activity android:name=".activities.MyMusicActivity" android:exported="true" />
         <activity android:name=".MainActivity" android:exported="true" />
 
-        <!-- Музыкальный сервис -->
-        <service android:name=".service.MusicService" />
-
-        <activity android:name=".activities.MyMusicActivity" android:exported="true" />
+        <service
+            android:name=".service.MusicService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
 
     </application>
 

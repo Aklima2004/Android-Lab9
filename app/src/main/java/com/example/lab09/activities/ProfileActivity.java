@@ -14,7 +14,6 @@ import com.example.lab09.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ProfileActivity extends AppCompatActivity {
-
     private TextView textViewWelcome;
     private Button buttonLogout;
     private BottomNavigationView bottomNavigationView;

@@ -34,9 +34,8 @@ public class FileHelper {
             }
             reader.close();
         } catch (FileNotFoundException e) {
-            // Файл не найден — создаём файл с начальными песнями
             createInitialSongs(context);
-            return readSongs(context); // После создания перечитать
+            return readSongs(context);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,10 +43,23 @@ public class FileHelper {
         return songs;
     }
 
-    // Записываем начальные песни в файл
+    // Добавление песни в файл
+    public static void addSong(Context context, Song song) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+                    context.openFileOutput(FILE_NAME, Context.MODE_APPEND)));
+            writer.write(song.getTitle() + ";" + song.getArtist() + "\n");
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Записываем начальные песни
     private static void createInitialSongs(Context context) {
         try {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE)));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+                    context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE)));
             writer.write("Shape of You;Ed Sheeran\n");
             writer.write("Blinding Lights;The Weeknd\n");
             writer.write("Dance Monkey;Tones and I\n");

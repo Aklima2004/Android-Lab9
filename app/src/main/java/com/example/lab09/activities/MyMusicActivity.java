@@ -29,13 +29,11 @@ public class MyMusicActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewMyMusic);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
-        // Загружаем песни из файла
         List<Song> songList = FileHelper.readSongs(this);
-        songAdapter = new SongAdapter(songList);
+        songAdapter = new SongAdapter(songList, false); // !!! Важно false
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(songAdapter);
 
-        // Устанавливаем выбранный пункт
         bottomNavigationView.setSelectedItemId(R.id.nav_mymusic);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
