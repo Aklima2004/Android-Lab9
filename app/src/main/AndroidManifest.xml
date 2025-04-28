@@ -32,11 +32,16 @@
         <!-- Домашний экран -->
         <activity android:name=".activities.HomeActivity" android:exported="true" />
 
+        <!-- Экран профиля (добавлено!) -->
+        <activity android:name=".activities.ProfileActivity" android:exported="true" />
+
         <!-- MainActivity оставляем (без интент-фильтра) -->
         <activity android:name=".MainActivity" android:exported="true" />
 
         <!-- Музыкальный сервис -->
         <service android:name=".service.MusicService" />
+
+        <activity android:name=".activities.MyMusicActivity" android:exported="true" />
 
     </application>
 

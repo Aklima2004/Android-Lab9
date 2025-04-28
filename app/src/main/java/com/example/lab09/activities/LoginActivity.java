@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -31,21 +30,23 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin = findViewById(R.id.buttonLogin);
 
         buttonSignUp.setOnClickListener(view -> {
-            String username = editTextUsername.getText().toString();
+            String username = editTextUsername.getText().toString().trim();
             if (!username.isEmpty()) {
                 saveUsername(username);
-                navigateToHome();
+                Toast.makeText(this, "Успешная регистрация!", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Please enter a username", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Пожалуйста, введите имя пользователя", Toast.LENGTH_SHORT).show();
             }
         });
 
         buttonLogin.setOnClickListener(view -> {
-            String username = getUsername();
-            if (username != null && !username.isEmpty()) {
+            String inputName = editTextUsername.getText().toString().trim();
+            String savedName = getUsername();
+            if (savedName != null && savedName.equals(inputName)) {
+                Toast.makeText(this, "Успешный вход!", Toast.LENGTH_SHORT).show();
                 navigateToHome();
             } else {
-                Toast.makeText(this, "No account found. Please Sign Up first.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Такого пользователя нет или неправильное имя", Toast.LENGTH_SHORT).show();
             }
         });
     }

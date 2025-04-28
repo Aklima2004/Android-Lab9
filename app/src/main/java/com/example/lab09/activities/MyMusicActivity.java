@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.lab09.R;
 import com.example.lab09.adapters.SongAdapter;
 import com.example.lab09.model.Song;
+import com.example.lab09.utils.FileHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+public class MyMusicActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private SongAdapter songAdapter;
@@ -24,43 +24,34 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_mymusic);
 
-        recyclerView = findViewById(R.id.recyclerViewSongs);
+        recyclerView = findViewById(R.id.recyclerViewMyMusic);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
-        setupHomeSongs(); // Загружаем песни
+        // Загружаем песни из файла
+        List<Song> songList = FileHelper.readSongs(this);
+        songAdapter = new SongAdapter(songList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(songAdapter);
 
         // Устанавливаем выбранный пункт
-        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        bottomNavigationView.setSelectedItemId(R.id.nav_mymusic);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.nav_home) {
-                return true;
-            } else if (itemId == R.id.nav_mymusic) {
-                startActivity(new Intent(HomeActivity.this, MyMusicActivity.class));
+                startActivity(new Intent(MyMusicActivity.this, HomeActivity.class));
                 finish();
                 return true;
+            } else if (itemId == R.id.nav_mymusic) {
+                return true;
             } else if (itemId == R.id.nav_profile) {
-                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+                startActivity(new Intent(MyMusicActivity.this, ProfileActivity.class));
                 finish();
                 return true;
             }
             return false;
         });
-    }
-
-    private void setupHomeSongs() {
-        List<Song> homeSongs = new ArrayList<>();
-        homeSongs.add(new Song("Lose Yourself", "Eminem"));
-        homeSongs.add(new Song("Bad Guy", "Billie Eilish"));
-        homeSongs.add(new Song("Levitating", "Dua Lipa"));
-        homeSongs.add(new Song("Stay", "The Kid LAROI & Justin Bieber"));
-        homeSongs.add(new Song("Blinding Lights", "The Weeknd"));
-
-        songAdapter = new SongAdapter(homeSongs);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(songAdapter);
     }
 }
